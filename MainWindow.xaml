@@ -7,18 +7,19 @@
         mc:Ignorable="d"
         Title="Encrypting and Decrypting" Height="350" Width="600">
 	<Grid>
-			<Label Content="Encrypting and Decrypting" HorizontalAlignment="Center" Height="60" VerticalAlignment="Top" Width="372" FontSize="28"/>
-			<Label Content="Text" HorizontalAlignment="Left" Height="50" VerticalAlignment="Top" Width="61" FontSize="28" Margin="30,80,0,0"/>
-			<TextBox Name="InputTextBox" HorizontalAlignment="Left" Height="30" Margin="120,90,0,0" VerticalAlignment="Top" Width="400"/>
-			<ComboBox Name="ComboBox" HorizontalAlignment="Left" Height="25" Margin="120,130,0,0" VerticalAlignment="Top" Width="200">
-				<ComboBoxItem Content="Caesar Cipher"/>
-				<ComboBoxItem Content="Vigenère Cipher"/>
-				<ComboBoxItem Content="Atbash"/>
-				<ComboBoxItem Content="Rail Fence Cipher"/>
-			</ComboBox>
-			<TextBox Name="KeyTextBox" HorizontalAlignment="Left" Height="30" Margin="120,170,0,0" VerticalAlignment="Top" Width="400" />
-			<Button Name="EncryptButton" Content="Encrypt" HorizontalAlignment="Left" VerticalAlignment="Top" Width="100" Height="30" Margin="120,210,0,0" Click="EncryptButton_Click"/>
-			<Button Name="DecryptButton" Content="Decrypt" HorizontalAlignment="Left" VerticalAlignment="Top" Width="100" Height="30" Margin="240,210,0,0" Click="DecryptButton_Click"/>
-			<TextBox Name="OutputTextBox" HorizontalAlignment="Left" Height="30" Margin="120,260,0,0" VerticalAlignment="Top" Width="400" IsReadOnly="True"/>
-		</Grid>
+		<Label Content="Encrypting and Decrypting" HorizontalAlignment="Center" Height="60" VerticalAlignment="Top" Width="372" FontSize="28"/>
+		<Label Content="Text" HorizontalAlignment="Left" Height="50" VerticalAlignment="Top" Width="61" FontSize="28" Margin="30,80,0,0"/>
+		<TextBox Name="InputTextBox" HorizontalAlignment="Left" Height="30" Margin="120,90,0,0" VerticalAlignment="Top" Width="400"/>
+		<ComboBox Name="ComboBox" HorizontalAlignment="Left" Height="25" Margin="120,130,0,0" VerticalAlignment="Top" Width="200">
+			<ComboBoxItem Content="Caesar Cipher"/>
+			<ComboBoxItem Content="Vigenère Cipher"/>
+			<ComboBoxItem Content="Atbash"/>
+			<ComboBoxItem Content="Rail Fence Cipher"/>
+		</ComboBox>
+		<TextBox Name="KeyTextBox" HorizontalAlignment="Left" Height="30" Margin="120,170,0,0" VerticalAlignment="Top" Width="400" />
+		<Button Name="EncryptButton" Content="Encrypt" HorizontalAlignment="Left" VerticalAlignment="Top" Width="100" Height="30" Margin="120,210,0,0" Click="EncryptButton_Click"/>
+		<Button Name="DecryptButton" Content="Decrypt" HorizontalAlignment="Left" VerticalAlignment="Top" Width="100" Height="30" Margin="240,210,0,0" Click="DecryptButton_Click"/>
+		<TextBox Name="OutputTextBox" HorizontalAlignment="Left" Height="30" Margin="120,260,0,0" VerticalAlignment="Top" Width="400" IsReadOnly="True"/>
+		<Label Content="@V1kaa" HorizontalAlignment="Center" Height="10" Margin="0,324,0,0" VerticalAlignment="Top" Width="120" FontSize="15" Background="#FFFFE7E7"/>
+	</Grid>
 </Window>

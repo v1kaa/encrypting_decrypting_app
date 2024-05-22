@@ -31,50 +31,116 @@ namespace encrypting
 
         private void EncryptButton_Click(object sender, RoutedEventArgs e)
         {
-            switch (ComboBox.Text)
+            try
             {
-                case "Caesar Cipher":
-                    OutputTextBox.Text = CaesarCipher(InputTextBox.Text, -1 * (Convert.ToInt16(KeyTextBox.Text)));
-                    break;
-                case "Vigenère Cipher":
-                    OutputTextBox.Text=VinegereCipher(InputTextBox.Text, KeyTextBox.Text,1);
-                    break;
-                case "Atbash":
-                    OutputTextBox.Text = AtbashCipher(InputTextBox.Text);
-                    break;
-                case "Rail Fence Cipher":
-                    OutputTextBox.Text = RailFenceEncrypt(InputTextBox.Text, Convert.ToInt16(KeyTextBox.Text));
-                    break;
-                default:
-                    break;
-            }
+                if (string.IsNullOrWhiteSpace(InputTextBox.Text) || string.IsNullOrWhiteSpace(ComboBox.Text))
+                {
+                    MessageBox.Show("please fill all the fields.");
+                    return;
+                }
 
+                switch (ComboBox.Text)
+                {
+                    case "Caesar Cipher":
+                        if (string.IsNullOrWhiteSpace(KeyTextBox.Text) || !int.TryParse(KeyTextBox.Text, out int caesarKey))
+                        {
+                            MessageBox.Show("invalid key for Caesar Cipher. must be a number");
+                            return;
+                        }
+                        OutputTextBox.Text = CaesarCipher(InputTextBox.Text, -1 * caesarKey);
+                        break;
+
+                    case "Vigenère Cipher":
+                        if (string.IsNullOrWhiteSpace(KeyTextBox.Text))
+                        {
+                            MessageBox.Show("invalid key for Vigenere Cipher.");
+                            return;
+                        }
+                        OutputTextBox.Text = VinegereCipher(InputTextBox.Text, KeyTextBox.Text, 1);
+                        break;
+
+                    case "Atbash":
+                        OutputTextBox.Text = AtbashCipher(InputTextBox.Text);
+                        break;
+
+                    case "Rail Fence Cipher":
+                        if (string.IsNullOrWhiteSpace(KeyTextBox.Text) || !int.TryParse(KeyTextBox.Text, out int railFenceKey))
+                        {
+                            MessageBox.Show("invalid key for Rail Fence Cipher.");
+                            return;
+                        }
+                        OutputTextBox.Text = RailFenceEncrypt(InputTextBox.Text, railFenceKey);
+                        break;
+
+                    default:
+                        MessageBox.Show("invalid cipher selection.");
+                        break;
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Something went wrong: {ex.Message}");
+            }
         }
 
         private void DecryptButton_Click(object sender, RoutedEventArgs e)
         {
-            switch (ComboBox.Text)
+            try
             {
-                case "Caesar Cipher":
-                    OutputTextBox.Text = CaesarCipher(InputTextBox.Text, (Convert.ToInt16(KeyTextBox.Text))); break;
-                case "Vigenère Cipher":
-                    OutputTextBox.Text= VinegereCipher(InputTextBox.Text, KeyTextBox.Text,-1);
-                    break;
-                case "Atbash":
-                    OutputTextBox.Text = AtbashCipher(InputTextBox.Text);
-                    break;
-                case "Rail Fence Cipher":
-                    OutputTextBox.Text =  RailFenceDecrypt(InputTextBox.Text, Convert.ToInt16(KeyTextBox.Text));
-                    break;
-                default:
-                    break;
+                if (string.IsNullOrWhiteSpace(InputTextBox.Text) || string.IsNullOrWhiteSpace(ComboBox.Text))
+                {
+                    MessageBox.Show("Please fill all the fields.");
+                    return;
+                }
+
+                switch (ComboBox.Text)
+                {
+                    case "Caesar Cipher":
+                        if (string.IsNullOrWhiteSpace(KeyTextBox.Text) || !int.TryParse(KeyTextBox.Text, out int caesarKey))
+                        {
+                            MessageBox.Show("invalid key for Caesar Cipher.");
+                            return;
+                        }
+                        OutputTextBox.Text = CaesarCipher(InputTextBox.Text, caesarKey);
+                        break;
+
+                    case "Vigenère Cipher":
+                        if (string.IsNullOrWhiteSpace(KeyTextBox.Text))
+                        {
+                            MessageBox.Show("invalid key for Vigenere Cipher.");
+                            return;
+                        }
+                        OutputTextBox.Text = VinegereCipher(InputTextBox.Text, KeyTextBox.Text, -1);
+                        break;
+
+                    case "Atbash":
+                        OutputTextBox.Text = AtbashCipher(InputTextBox.Text);
+                        break;
+
+                    case "Rail Fence Cipher":
+                        if (string.IsNullOrWhiteSpace(KeyTextBox.Text) || !int.TryParse(KeyTextBox.Text, out int railFenceKey))
+                        {
+                            MessageBox.Show("invalid key for Rail Fence Cipher.");
+                            return;
+                        }
+                        OutputTextBox.Text = RailFenceDecrypt(InputTextBox.Text, railFenceKey);
+                        break;
+
+                    default:
+                        MessageBox.Show("invalid cipher selection.");
+                        break;
+                }
             }
-
-
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Something went wrong: {ex.Message}");
+            }
         }
+
         private string CaesarCipher(string sentenceForEncrypting, int shift)
         {
             StringBuilder result = new StringBuilder();
+            
             for (int i = 0; i < sentenceForEncrypting.Length; i++)
             {
                 int x = alfabet.IndexOf(Char.ToLower(sentenceForEncrypting[i]));
@@ -188,26 +254,22 @@ namespace encrypting
 
         private string RailFenceEncrypt(string stringForEncrypting, int rows)
         {
-            // Якщо кількість рядків рівна 1, повертаємо вихідний рядок
             if (rows == 1)
             {
                 return stringForEncrypting;
             }
-
-            // Створюємо StringBuilder для результату
             StringBuilder result = new StringBuilder();
 
-            // Проходимося по кожному рядку "забору"
             for (int i = 0; i < rows; i++)
             {
-                int increment = 2 * (rows - 1); // Інкремент для переміщення між символами
+                int increment = 2 * (rows - 1); 
 
-                // Ітерація через всі символи в рядку
+                
                 for (int k = i; k < stringForEncrypting.Length; k += increment)
                 {
-                    result.Append(stringForEncrypting[k]); // Додаємо символ до результату
+                    result.Append(stringForEncrypting[k]); 
 
-                    // Додаємо додатковий символ для проміжних рядків
+                    
                     if (i > 0 && i < rows - 1 && (k + increment - 2 * i) < stringForEncrypting.Length)
                     {
                         result.Append(stringForEncrypting[k + increment - 2 * i]);
@@ -215,45 +277,41 @@ namespace encrypting
                 }
             }
 
-            // Повертаємо зашифрований текст
+            
             return result.ToString();
         }
         private string RailFenceDecrypt(string cipherText, int rows)
         {
-            // Якщо кількість рядків рівна 1, повертаємо вихідний рядок
+            
             if (rows == 1)
             {
                 return cipherText;
             }
 
-            // Створюємо масив для збереження розшифрованого тексту
+            
             char[] result = new char[cipherText.Length];
-            int k = 0; // Індекс для відслідковування позицій у зашифрованому тексті
+            int k = 0; 
 
-            // Масив для збереження позицій символів у зашифрованому тексті
+            
             int[] pos = new int[cipherText.Length];
 
-            // Проходимося по кожному рядку "забору"
+            
             for (int i = 0; i < rows; i++)
             {
-                int increment = 2 * (rows - 1); // Інкремент для переміщення між символами
+                int increment = 2 * (rows - 1); 
                 for (int j = i; j < cipherText.Length; j += increment)
                 {
-                    pos[k++] = j; // Записуємо позиції символів поточного рядка
+                    pos[k++] = j; 
                     if (i > 0 && i < rows - 1 && (j + increment - 2 * i) < cipherText.Length)
                     {
-                        pos[k++] = j + increment - 2 * i; // Додаємо додаткові позиції для проміжних рядків
+                        pos[k++] = j + increment - 2 * i;
                     }
                 }
             }
-
-            // Записуємо символи з зашифрованого тексту у відповідні позиції у результат
             for (int i = 0; i < cipherText.Length; i++)
             {
                 result[pos[i]] = cipherText[i];
             }
-
-            // Повертаємо розшифрований текст як рядок
             return new string(result);
         }
 
